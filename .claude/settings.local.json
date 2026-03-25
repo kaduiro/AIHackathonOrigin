@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node:*)",
+      "Bash(ls:*)",
+      "Bash(npm run:*)",
+      "Bash(ls \"C:/Users/akkun/kaduiro/AIHackathonOrigin/src/app/\\(main\\)/home/\")",
+      "Bash(ls \"C:/Users/akkun/kaduiro/AIHackathonOrigin/src/app/\\(main\\)/events/\")",
+      "Bash(ls C:/Users/akkun/kaduiro/AIHackathonOrigin/src/app/'\\(main\\)'/mentors/)",
+      "Bash(ls \"C:/Users/akkun/kaduiro/AIHackathonOrigin/src/app/\\(main\\)/\")",
+      "Bash(ls \"C:/Users/akkun/kaduiro/AIHackathonOrigin/src/app/\\(main\\)/notifications/\")",
+      "Bash(ls \"C:/Users/akkun/kaduiro/AIHackathonOrigin/src/app/\\(main\\)/profile/\")",
+      "Bash(find \"C:/Users/akkun/kaduiro/AIHackathonOrigin/src/app/\\(main\\)/notifications\" -type f)",
+      "Bash(find \"C:/Users/akkun/kaduiro/AIHackathonOrigin/src/app/\\(main\\)/profile\" -type f)",
+      "Bash(find \"C:/Users/akkun/kaduiro/AIHackathonOrigin/src/app/\\(admin\\)/admin\" -type f)",
+      "Bash(npx supabase:*)"
+    ]
+  }
+}

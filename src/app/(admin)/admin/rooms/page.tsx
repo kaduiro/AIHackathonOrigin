@@ -1,0 +1,24 @@
+import { getCurrentUser } from '@/lib/auth/session'
+import { redirect } from 'next/navigation'
+import { createClient } from '@/lib/supabase/server'
+import { ROUTES } from '@/constants/routes'
+import { PageHeader } from '@/components/layout/page-header'
+import { ReviewQueue } from '@/components/admin/review-queue'
+
+export default async function RoomApprovalPage() {
+  const user = await getCurrentUser()
+  if (!user || user.role !== 'admin') redirect(ROUTES.LOGIN)
+
+  const supabase = await createClient()
+  const { data: rooms } = await supabase
+    .from('rooms')
+    .select('*, users:creator_id(display_name)')
+    .order('created_at')
+
+  return (
+    <div className="space-y-6">
+      <PageHeader title="ルーム承認" />
+      <ReviewQueue items={rooms || []} type="room" />
+    </div>
+  )
+}
