@@ -18,21 +18,24 @@ export function BottomNav() {
   const pathname = usePathname()
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 border-t bg-background md:hidden">
-      <div className="flex items-center justify-around">
+    <nav className="fixed bottom-0 left-0 right-0 z-50 border-t bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 md:hidden">
+      <div className="mx-auto flex max-w-2xl items-center justify-around">
         {navItems.map((item) => {
-          const isActive = pathname.startsWith(item.href)
+          const isActive = pathname === item.href || (item.href !== '/home' && pathname.startsWith(item.href))
           return (
             <Link
               key={item.href}
               href={item.href}
               className={cn(
-                'flex flex-col items-center gap-1 px-3 py-2 text-xs',
+                'relative flex flex-col items-center gap-0.5 px-3 py-2 text-[10px] transition-colors',
                 isActive ? 'text-primary' : 'text-muted-foreground'
               )}
             >
               <item.icon className="h-5 w-5" />
               <span>{item.label}</span>
+              {isActive && (
+                <span className="absolute -top-px left-1/2 h-0.5 w-8 -translate-x-1/2 rounded-full bg-primary" />
+              )}
             </Link>
           )
         })}
