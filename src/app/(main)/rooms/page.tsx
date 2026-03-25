@@ -14,7 +14,7 @@ export default async function RoomListPage() {
   const supabase = await createClient()
   const { data: rooms } = await supabase
     .from('rooms')
-    .select('*, communities(name), room_memberships(count)')
+    .select('*')
     .eq('approval_status', 'approved')
     .order('created_at', { ascending: false })
 

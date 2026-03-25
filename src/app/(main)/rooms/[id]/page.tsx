@@ -14,7 +14,7 @@ export default async function RoomDetailPage({ params }: { params: Promise<{ id:
 
   const { data: room } = await supabase
     .from('rooms')
-    .select('*, communities(name)')
+    .select('*')
     .eq('id', id)
     .single()
 
