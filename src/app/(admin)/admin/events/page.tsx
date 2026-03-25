@@ -12,7 +12,7 @@ export default async function EventMonitoringPage() {
   const supabase = await createClient()
   const { data: events } = await supabase
     .from('events')
-    .select('*, users:creator_id(display_name)')
+    .select('*')
     .order('created_at', { ascending: false })
 
   return (

@@ -16,7 +16,7 @@ export default async function EventListPage() {
   const supabase = await createClient()
   const { data: events } = await supabase
     .from('events')
-    .select('*, users(display_name), event_participations(count)')
+    .select('*')
     .eq('status', 'published')
     .gte('start_at', new Date().toISOString())
     .order('start_at')

@@ -12,7 +12,7 @@ export default async function AuditLogPage() {
   const supabase = await createClient()
   const { data: logs } = await supabase
     .from('audit_logs')
-    .select('*, users:actor_id(display_name)')
+    .select('*')
     .order('created_at', { ascending: false })
     .limit(100)
 

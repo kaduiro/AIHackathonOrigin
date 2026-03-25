@@ -16,7 +16,7 @@ export default async function QAListPage() {
   const supabase = await createClient()
   const { data: posts } = await supabase
     .from('posts')
-    .select('*, users(display_name, avatar_url)')
+    .select('*')
     .eq('status', 'published')
     .is('room_id', null)
     .order('created_at', { ascending: false })

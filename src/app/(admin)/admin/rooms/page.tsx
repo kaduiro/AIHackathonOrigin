@@ -12,7 +12,7 @@ export default async function RoomApprovalPage() {
   const supabase = await createClient()
   const { data: rooms } = await supabase
     .from('rooms')
-    .select('*, users:creator_id(display_name)')
+    .select('*')
     .order('created_at')
 
   return (
