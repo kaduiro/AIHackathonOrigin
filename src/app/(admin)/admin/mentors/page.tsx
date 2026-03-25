@@ -12,7 +12,7 @@ export default async function MentorReviewPage() {
   const supabase = await createClient()
   const { data: mentors } = await supabase
     .from('mentor_profiles')
-    .select('*, users(display_name, email)')
+    .select('*')
     .order('created_at')
 
   return (

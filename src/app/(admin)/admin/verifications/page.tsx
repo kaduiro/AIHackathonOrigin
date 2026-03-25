@@ -12,7 +12,7 @@ export default async function VerificationsPage() {
   const supabase = await createClient()
   const { data: verifications } = await supabase
     .from('verifications')
-    .select('*, users(display_name, email)')
+    .select('*')
     .order('submitted_at', { ascending: true })
 
   return (

@@ -15,7 +15,7 @@ export default async function QADetailPage({ params }: { params: Promise<{ id: s
 
   const { data: post } = await supabase
     .from('posts')
-    .select('*, users(id, display_name, avatar_url)')
+    .select('*')
     .eq('id', id)
     .single()
 
@@ -25,7 +25,7 @@ export default async function QADetailPage({ params }: { params: Promise<{ id: s
 
   const { data: comments } = await supabase
     .from('comments')
-    .select('*, users(id, display_name, avatar_url)')
+    .select('*')
     .eq('post_id', id)
     .eq('status', 'published')
     .order('created_at')

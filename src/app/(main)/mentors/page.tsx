@@ -14,7 +14,7 @@ export default async function MentorListPage() {
   const supabase = await createClient()
   const { data: mentors } = await supabase
     .from('mentor_profiles')
-    .select('*, users(id, display_name, avatar_url, bio)')
+    .select('*')
     .eq('status', 'approved')
 
   return (

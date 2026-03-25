@@ -14,7 +14,7 @@ export default async function RoomDetailPage({ params }: { params: Promise<{ id:
 
   const { data: room } = await supabase
     .from('rooms')
-    .select('*, communities(name)')
+    .select('*')
     .eq('id', id)
     .single()
 
@@ -38,7 +38,7 @@ export default async function RoomDetailPage({ params }: { params: Promise<{ id:
   // Get room posts
   const { data: posts } = await supabase
     .from('posts')
-    .select('*, users(display_name, avatar_url)')
+    .select('*')
     .eq('room_id', id)
     .eq('status', 'published')
     .order('created_at', { ascending: false })

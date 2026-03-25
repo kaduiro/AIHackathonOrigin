@@ -12,7 +12,7 @@ export default async function ReportsPage() {
   const supabase = await createClient()
   const { data: reports } = await supabase
     .from('reports')
-    .select('*, users:reporter_id(display_name)')
+    .select('*')
     .order('created_at', { ascending: false })
 
   return (

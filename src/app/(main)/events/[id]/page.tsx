@@ -13,7 +13,7 @@ export default async function EventDetailPage({ params }: { params: Promise<{ id
 
   const { data: event } = await supabase
     .from('events')
-    .select('*, users(display_name)')
+    .select('*')
     .eq('id', id)
     .single()
 

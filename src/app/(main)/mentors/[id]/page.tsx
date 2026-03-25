@@ -14,7 +14,7 @@ export default async function MentorDetailPage({ params }: { params: Promise<{ i
 
   const { data: mentor } = await supabase
     .from('mentor_profiles')
-    .select('*, users(id, display_name, avatar_url, bio)')
+    .select('*')
     .eq('user_id', id)
     .eq('status', 'approved')
     .single()
