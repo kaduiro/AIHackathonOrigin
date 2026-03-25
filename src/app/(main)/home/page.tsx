@@ -27,27 +27,64 @@ export default async function HomePage() {
     .select('*')
     .order('display_order')
 
+  // Fetch posts and their authors separately to avoid FK ambiguity
   const { data: recentPosts } = await supabase
     .from('posts')
-    .select('*, users(id, display_name, avatar_url)')
+    .select('*')
     .eq('status', 'published')
     .order('created_at', { ascending: false })
     .limit(20)
 
+  // Enrich posts with author info
+  const enrichedPosts = await Promise.all(
+    (recentPosts || []).map(async (post) => {
+      const { data: author } = await supabase
+        .from('users')
+        .select('id, display_name, avatar_url')
+        .eq('id', post.author_id)
+        .single()
+      return { ...post, users: author }
+    })
+  )
+
   const { data: upcomingEvents } = await supabase
     .from('events')
-    .select('*, users(display_name)')
+    .select('*')
     .eq('status', 'published')
     .gte('start_at', new Date().toISOString())
     .order('start_at')
     .limit(10)
 
+  // Enrich events with creator info
+  const enrichedEvents = await Promise.all(
+    (upcomingEvents || []).map(async (event) => {
+      const { data: creator } = await supabase
+        .from('users')
+        .select('display_name')
+        .eq('id', event.creator_id)
+        .single()
+      return { ...event, users: creator }
+    })
+  )
+
   const { data: activeRooms } = await supabase
     .from('rooms')
-    .select('*, communities(name), room_memberships(count)')
+    .select('*')
     .eq('approval_status', 'approved')
     .order('created_at', { ascending: false })
     .limit(6)
+
+  // Enrich rooms with community info
+  const enrichedRooms = await Promise.all(
+    (activeRooms || []).map(async (room) => {
+      const { data: community } = await supabase
+        .from('communities')
+        .select('name')
+        .eq('id', room.community_id)
+        .single()
+      return { ...room, communities: community }
+    })
+  )
 
   return (
     <div className="mx-auto max-w-2xl px-4 pb-20">
@@ -55,7 +92,7 @@ export default async function HomePage() {
       <StatusBadge user={user} />
 
       {/* Instagram stories-like events */}
-      <EventStories events={upcomingEvents || []} />
+      <EventStories events={enrichedEvents} />
 
       {/* Tag filter */}
       <TagFilterBar
@@ -65,9 +102,9 @@ export default async function HomePage() {
 
       {/* Main timeline */}
       <FeedTimeline
-        posts={recentPosts || []}
+        posts={enrichedPosts}
         communities={recommendations.slice(0, 3)}
-        rooms={activeRooms || []}
+        rooms={enrichedRooms}
       />
 
       {/* FAB */}
